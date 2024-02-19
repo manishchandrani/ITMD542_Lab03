@@ -6,26 +6,18 @@ block content
       div.col-md-6
         div.card
           div.card-body
-            h1.card-title.text-center.mb-4 New Contact            
+            h1.card-title.text-center.mb-4 New Contact
+            if msg
+              ul.text-danger
+                each val in msg
+                  li.red= val.msg                     
             form(method='post', action='/contacts')
               .form-group
                 label(for='firstName') First Name:
-                input.form-control(type='text', name='firstName', required)
-              //- Display errors for first name
-              if errors
-                ul.text-danger
-                  each error in errors
-                    if error.param === 'firstName'
-                      li= error.msg
+                input.form-control(type='text', name='firstName')
               .form-group
                 label(for='lastName') Last Name:
-                input.form-control(type='text', name='lastName', required)
-              //- Display errors for last name
-              if errors
-                ul.text-danger
-                  each error in errors
-                    if error.param === 'lastName'
-                      li= error.msg
+                input.form-control(type='text', name='lastName')
               .form-group
                 label(for='emailAddress') Email Address:
                 input.form-control(name='emailAddress')              
