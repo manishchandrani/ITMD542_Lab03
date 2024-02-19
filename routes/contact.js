@@ -17,10 +17,10 @@ router.get('/new', (req, res) => {
 
 // Validation middleware
 const validateContact = [
-  body('firstName').trim().notEmpty().withMessage('Please fill out this field.'),
-  body('lastName').trim().notEmpty().withMessage('Please fill out this field.'),
-  body('emailAddress').optional().trim(),
-  body('notes').optional().trim(),
+  body('firstName').trim().notEmpty().withMessage('Please fill out this field.').escape(),
+  body('lastName').trim().notEmpty().withMessage('Please fill out this field.').escape(),
+  body('emailAddress').optional().trim().escape(),
+  body('notes').optional().trim().escape(),
 ];
 
 // Route handler for handling the submission of a new contact form
