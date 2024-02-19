@@ -15,27 +15,32 @@ router.get('/new', (req, res) => {
   res.render('contacts/new');
 });
 
-// Route handler for handling the submission of a new contact form
-router.post('/', (req, res) => {
-  const { firstName, lastName, emailAddress, notes } = req.body;
-  const sanitizedFirstName = firstName.trim();
-  const sanitizedLastName = lastName.trim();
-  const sanitizedEmailAddress = emailAddress.trim();
-  const sanitizedNotes = notes.trim();
+// Validation middleware
+const validateContact = [
+  body('firstName').trim().notEmpty().withMessage('Please fill out this field.'),
+  body('lastName').trim().notEmpty().withMessage('Please fill out this field.'),
+  body('emailAddress').optional().trim(),
+  body('notes').optional().trim(),
+];
 
-  if (!sanitizedFirstName || !sanitizedLastName) {
-    res.status(400).send('First Name and Last Name are required');
-    return;
+// Route handler for handling the submission of a new contact form
+router.post('/', validateContact, (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.render('contacts/new', { errors: errors.array() });
   }
 
-  const newContact = new Contact(sanitizedFirstName, sanitizedLastName, sanitizedEmailAddress, sanitizedNotes);
+  const { firstName, lastName, emailAddress, notes } = req.body;
+
+  const newContact = new Contact(firstName, lastName, emailAddress, notes);
   newContact.generateContactId();
   newContact.setDateTime();
 
-  const contacts = contactUtils.readContactsFromFile(); // Read contacts from file
-  contactUtils.addContact(newContact, contacts); // Pass contacts array to addContact function
+  const contacts = contactUtils.readContactsFromFile();
+  contactUtils.addContact(newContact, contacts);
   res.redirect('/contacts');
 });
+
 
 // Route handler for displaying a single contact
 router.get('/:id', (req, res) => {
@@ -63,23 +68,27 @@ router.get('/:id/editpage', (req, res) => {
   }
 });
 
-// Route handler for updating an existing contact
-router.post('/:id/edit', (req, res) => {
+// Route handler for updating an existing contact with validation
+router.post('/:id/edit', validateContact, (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const contactId = req.params.id;
+    const contacts = contactUtils.readContactsFromFile();
+    try {
+      const contact = Contact.getContactById(contactId, contacts);
+      return res.render('contacts/edit', { contact, errors: errors.array() });
+    } catch (error) {
+      console.error('Error retrieving contact for editing:', error);
+      return res.status(404).send('Contact not found');
+    }
+  }
 
   const contactId = req.params.id;
-  
-
   const { firstName, lastName, emailAddress, notes } = req.body;
-
-
   const updatedContact = new Contact(firstName, lastName, emailAddress, notes);
   updatedContact.generateContactId(); 
   updatedContact.setDateTime(); 
-
-
   const contacts = contactUtils.readContactsFromFile();
-
-
   contactUtils.updateContact(contactId, updatedContact, contacts);
   res.redirect(`/contacts`);
 });
