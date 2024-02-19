@@ -84,6 +84,16 @@ router.post('/:id/edit', (req, res) => {
 });
 
 
+// Route handler for deleting a contact
+router.post('/:id/delete', (req, res) => {
+  const contactId = req.params.id;
+  const deletionSuccessful = contactUtils.deleteContact(contactId);
+  if (deletionSuccessful) {
+    res.redirect('/contacts');
+  } else {
+    res.status(404).send('Contact not found');
+  }
+});
 
 
 
