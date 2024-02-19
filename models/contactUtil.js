@@ -14,4 +14,19 @@ function readContactsFromFile() {
     }
 }
 
+// Function to write contact data to JSON file
+function writeContactsToFile(contacts) {
+    try {
+        fs.writeFileSync(CONTACTS_FILE_PATH, JSON.stringify(contacts, null, 2));
+    } catch (error) {
+        console.error('Error writing contacts to file:', error);
+    }
+}
 
+// Function to save contacts data to file whenever it is modified
+function saveContactsToFileSystem(contacts) {
+    writeContactsToFile(contacts);
+}
+
+
+module.exports = { saveContactsToFileSystem, readContactsFromFile};
