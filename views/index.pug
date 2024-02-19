@@ -1,7 +1,13 @@
 extends layout
 
 block content
-  h1= title
-  p= info
-  p= contactInfo
-  a(href='/contacts') View Contacts Database
+  div.container-fluid
+    div.row.justify-content-center.align-items-center.min-vh-100
+      div.col-md-8
+        div.border.p-4
+          h1.text-center.mb-4= title
+          p.text-center.mb-3= info
+          p.text-center.mb-3= name
+          p.text-center.mb-3= email
+          div.text-center
+            a.btn.btn-primary(href='/contacts') View Contacts
