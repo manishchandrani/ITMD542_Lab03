@@ -50,6 +50,20 @@ router.get('/:id', (req, res) => {
 });
 
 
+// Route handler for editing a contact
+router.get('/:id/editpage', (req, res) => {
+  const contacts = contactUtils.readContactsFromFile();
+  const contactId = req.params.id;
+  try {
+    const contact = Contact.getContactById(contactId, contacts);
+    res.render('contacts/edit', { contact });
+  } catch (error) {
+    console.error('Error retrieving contact for editing:', error);
+    res.status(404).send('Contact not found');
+  }
+});
+
+
 
 
 module.exports = router;
