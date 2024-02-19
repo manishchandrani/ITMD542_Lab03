@@ -7,6 +7,9 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+// Import contact router from the routes directory
+var contactRouter = require('./routes/contact');
+
 var app = express();
 
 // view engine setup
@@ -18,6 +21,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Mount contact router under the /contacts path
+app.use('/contacts', contactRouter);
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
