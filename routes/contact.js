@@ -49,7 +49,6 @@ router.get('/:id', (req, res) => {
   }
 });
 
-
 // Route handler for editing a contact
 router.get('/:id/editpage', (req, res) => {
   const contacts = contactUtils.readContactsFromFile();
@@ -65,17 +64,27 @@ router.get('/:id/editpage', (req, res) => {
 
 // Route handler for updating an existing contact
 router.post('/:id/edit', (req, res) => {
+
   const contactId = req.params.id;
+  
+
   const { firstName, lastName, emailAddress, notes } = req.body;
 
+
   const updatedContact = new Contact(firstName, lastName, emailAddress, notes);
-  updatedContact.generateContactId();
-  updatedContact.setDateTime();
+  updatedContact.generateContactId(); 
+  updatedContact.setDateTime(); 
+
 
   const contacts = contactUtils.readContactsFromFile();
+
+
   contactUtils.updateContact(contactId, updatedContact, contacts);
-  res.redirect(`/contacts/${contactId}`);
+  res.redirect(`/contacts`);
 });
+
+
+
 
 
 
