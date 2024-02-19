@@ -9,6 +9,10 @@ router.get('/', (req, res) => {
   res.render('contacts/index', { contacts });
 });
 
+// Route handler for showing the form to create a new contact
+router.get('/new', (req, res) => {
+  res.render('contacts/new');
+});
 
 
 module.exports = router;
