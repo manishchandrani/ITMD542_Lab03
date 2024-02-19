@@ -14,7 +14,20 @@ class Contact {
         this.id = randomUUID();
     }
 
+    // Method to set the date/time when the contact is created or last edited
+    setDateTime() {
+        const date = new Date();
+        this.dateTime = date.toLocaleString('en-US');
+    }
 
+    // Method to retrieve a contact by ID
+    static getContactById(contactId, contacts) {
+        const contact = contacts.find(contact => contact.id === contactId);
+        if (!contact) {
+            throw new Error(`Contact with ID ${contactId} not found.`);
+        }
+        return contact;
+    }
 
 }
 
