@@ -7,13 +7,31 @@ block content
         div.card
           div.card-body
             h1.card-title.text-center.mb-4 Edit Contact
+            //- Display errors for the entire form
+            if errors
+              .alert.alert-danger
+                ul
+                  each error in errors
+                    li= error.msg
             form(method='post', action=`/contacts/${contact.id}/edit`)
               .form-group
                 label(for='firstName') First Name:
                 input.form-control(type='text', name='firstName', value=contact.firstName, required)
+                //- Display errors for first name
+                if errors
+                  ul.text-danger
+                    each error in errors
+                      if error.param === 'firstName'
+                        li= error.msg
               .form-group
                 label(for='lastName') Last Name:
                 input.form-control(type='text', name='lastName', value=contact.lastName, required)
+                //- Display errors for last name
+                if errors
+                  ul.text-danger
+                    each error in errors
+                      if error.param === 'lastName'
+                        li= error.msg
               .form-group
                 label(for='emailAddress') Email Address:
                 input.form-control(type='email', name='emailAddress', value=contact.emailAddress)
