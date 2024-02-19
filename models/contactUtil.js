@@ -9,6 +9,7 @@ function readContactsFromFile() {
         const data = fs.readFileSync(CONTACTS_FILE_PATH, 'utf8');
         return JSON.parse(data);
     } catch (error) {
+        // If file does not exist or error occurs, return empty array
         console.error('Error reading contacts from file:', error);
         return [];
     }
@@ -37,6 +38,23 @@ function addContact(contact) {
     saveContactsToFileSystem(contacts);
 }
 
+// Function to delete a contact by ID
+function deleteContact(contactId) {
+    try {
+        let contacts = readContactsFromFile(); // Read contacts from file
+        const index = contacts.findIndex(contact => contact.id === contactId);
+        if (index !== -1) {
+            contacts.splice(index, 1);
+            saveContactsToFileSystem(contacts); // Save updated contacts to file
+            return true; // Indicate successful deletion
+        }
+        return false; // Indicate contact not found
+    } catch (error) {
+        console.error('Error deleting contact:', error);
+        return false; // Indicate deletion was not successful due to error
+    }
+}
+
 // Function to update an existing contact
 function updateContact(contactId, updatedContact, contacts) {
     const index = contacts.findIndex(contact => contact.id === contactId);
@@ -46,7 +64,4 @@ function updateContact(contactId, updatedContact, contacts) {
     }
   }
 
-
-
-
-module.exports = { saveContactsToFileSystem, readContactsFromFile, addContact,updateContact};
+module.exports = { saveContactsToFileSystem, readContactsFromFile, addContact,deleteContact,updateContact};
