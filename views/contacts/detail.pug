@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  h1 Contact Details
+  div
+    p
+      strong First Name:
+      | #{contact.firstName}
+    p
+      strong Last Name:
+      | #{contact.lastName}
+    //- Display Email Address if available
+    if contact.emailAddress
+      p
+        strong Email Address:
+        | #{contact.emailAddress}
+    //- Display Notes if available
+    if contact.notes
+      p
+        strong Notes:
+        | #{contact.notes}
+    p
+      strong Date Created/Modified:
+      | #{contact.dateTime}
+
