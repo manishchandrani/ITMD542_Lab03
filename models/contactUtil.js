@@ -28,5 +28,15 @@ function saveContactsToFileSystem(contacts) {
     writeContactsToFile(contacts);
 }
 
+// Function to add a new contact
+function addContact(contact) {
+    contact.generateContactId(); // Generate UUID for the contact
+    contact.setDateTime(); // Set date/time for the contact
+    const contacts = readContactsFromFile(); // Read contacts from file
+    contacts.push(contact);
+    saveContactsToFileSystem(contacts);
+}
 
-module.exports = { saveContactsToFileSystem, readContactsFromFile};
+
+
+module.exports = { saveContactsToFileSystem, readContactsFromFile, addContact};
