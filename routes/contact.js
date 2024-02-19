@@ -36,6 +36,20 @@ router.post('/', (req, res) => {
   res.redirect('/contacts');
 });
 
+// Route handler for displaying a single contact
+router.get('/:id', (req, res) => {
+  const contacts = contactUtils.readContactsFromFile();
+  const contactId = req.params.id;
+  try {
+    const contact = Contact.getContactById(contactId, contacts);
+    res.render('contacts/detail', { contact });
+  } catch (error) {
+    console.error('Error retrieving contact:', error);
+    res.status(404).send('Contact not found');
+  }
+});
+
+
 
 
 module.exports = router;
