@@ -6,7 +6,7 @@ Manish Chandrani
 Email: mchandrani@hawk.iit.edu
 
 
-Github repo link : 
+Github repo link : https://github.com/manishchandrani/ITMD541_Lab2
 
 Project Description: This project is building a contact database application using Node.js and Express, focusing on implementing CRUD (Create, Read, Update, Delete) operations. The application allows users to manage their contacts by creating, editing, viewing, and deleting individual contacts. The contact data is persisted using a JSON file on the file system.
 
@@ -22,7 +22,7 @@ Installation :
 Clone the Repository:
 
 For cloning repo :
-git clone <repository_url>
+git clone 
 
 Navigate to the Project Directory:
 cd contact-database
