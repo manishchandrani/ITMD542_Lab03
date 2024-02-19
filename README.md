@@ -22,7 +22,7 @@ Installation :
 Clone the Repository:
 
 For cloning repo :
-git clone 
+git clone https://github.com/manishchandrani/ITMD541_Lab2.git
 
 Navigate to the Project Directory:
 cd contact-database
