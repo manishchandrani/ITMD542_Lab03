@@ -37,6 +37,16 @@ function addContact(contact) {
     saveContactsToFileSystem(contacts);
 }
 
+// Function to update an existing contact
+function updateContact(contactId, updatedContact, contacts) {
+    const index = contacts.findIndex(contact => contact.id === contactId);
+    if (index !== -1) {
+      contacts[index] = updatedContact;
+      saveContactsToFileSystem(contacts); // Pass the contacts array to the function
+    }
+  }
 
 
-module.exports = { saveContactsToFileSystem, readContactsFromFile, addContact};
+
+
+module.exports = { saveContactsToFileSystem, readContactsFromFile, addContact,updateContact};
