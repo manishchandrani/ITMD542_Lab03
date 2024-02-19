@@ -17,8 +17,8 @@ router.get('/new', (req, res) => {
 
 // Validation middleware
 const validateContact = [
-  body('firstName').trim().notEmpty().withMessage('Please fill out this field.').escape(),
-  body('lastName').trim().notEmpty().withMessage('Please fill out this field.').escape(),
+  body('firstName').trim().notEmpty().withMessage('First Name required').escape(),
+  body('lastName').trim().notEmpty().withMessage('Last Name required').escape(),
   body('emailAddress').optional().trim().escape(),
   body('notes').optional().trim().escape(),
 ];
@@ -27,7 +27,7 @@ const validateContact = [
 router.post('/', validateContact, (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.render('contacts/new', { errors: errors.array() });
+    return res.render('contacts/new', { msg: errors.array() });
   }
 
   const { firstName, lastName, emailAddress, notes } = req.body;
@@ -76,7 +76,7 @@ router.post('/:id/edit', validateContact, (req, res) => {
     const contacts = contactUtils.readContactsFromFile();
     try {
       const contact = Contact.getContactById(contactId, contacts);
-      return res.render('contacts/edit', { contact, errors: errors.array() });
+      return res.render('contacts/edit', { contact, msg: errors.array() });
     } catch (error) {
       console.error('Error retrieving contact for editing:', error);
       return res.status(404).send('Contact not found');
