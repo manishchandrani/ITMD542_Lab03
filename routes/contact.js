@@ -15,16 +15,6 @@ router.get('/new', (req, res) => {
   res.render('contacts/new');
 });
 
-// Route handler for displaying a single contact
-router.get('/:id', (req, res) => {
-  const contactId = req.params.id;
-  const contact = contactUtils.getContactByIdFromDatabase(contactId);
-  if (!contact) {
-    return res.status(404).send('Contact not found');
-  }
-  res.render('contacts/detail', { contact });
-});
-
 // Validation middleware
 const validateContact = [
   body('firstName').trim().notEmpty().withMessage('First Name required').escape(),
@@ -50,39 +40,6 @@ router.post('/', validateContact, (req, res) => {
   res.redirect('/contacts');
 });
 
-// Route handler for editing a contact
-router.get('/:id/editpage', (req, res) => {
-  const contactId = req.params.id;
-  const contact = contactUtils.getContactByIdFromDatabase(contactId);
-  if (!contact) {
-    return res.status(404).send('Contact not found');
-  }
-  res.render('contacts/edit', { contact });
-});
-
-// Route handler for updating an existing contact with validation
-router.post('/:id/edit', validateContact, (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    const contactId = req.params.id;
-    const contact = contactUtils.getContactByIdFromDatabase(contactId);
-    return res.render('contacts/edit', { contact, msg: errors.array() });
-  }
-
-  const contactId = req.params.id;
-  const { firstName, lastName, emailAddress, notes } = req.body;
-  const updatedContact = new Contact(firstName, lastName, emailAddress, notes);
-  updatedContact.setDateTime();
-  contactUtils.updateContactInDatabase(contactId, updatedContact);
-  res.redirect(`/contacts`);
-});
-
-// Route handler for deleting a contact
-router.post('/:id/delete', (req, res) => {
-  const contactId = req.params.id;
-  contactUtils.deleteContactFromDatabase(contactId);
-  res.redirect('/contacts');
-});
 
 
 module.exports = router;
