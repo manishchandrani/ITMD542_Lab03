@@ -35,6 +35,11 @@ function getContactByIdFromDatabase(contactId) {
     return query.get(contactId);
 }
 
+function updateContactInDatabase(contactId, updatedContact) {
+    const updateStmt = db.prepare('UPDATE contacts SET firstName=?, lastName=?, emailAddress=?, notes=?, dateTime=? WHERE id=?');
+    updateStmt.run(updatedContact.firstName, updatedContact.lastName, updatedContact.emailAddress, updatedContact.notes, updatedContact.dateTime, contactId);
+}
 
 
-module.exports = { readContactsFromDatabase, addContactToDatabase, getContactByIdFromDatabase};
+
+module.exports = { readContactsFromDatabase, addContactToDatabase, getContactByIdFromDatabase, updateContactInDatabase};
