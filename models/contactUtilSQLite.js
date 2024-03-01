@@ -16,8 +16,20 @@ const createStmt = db.prepare(`
     )
 `);
 
+
 createStmt.run();
 
 
+function readContactsFromDatabase() {
+    const query = db.prepare('SELECT * FROM contacts');
+    return query.all();
+}
+
+function addContactToDatabase(contact) {
+    const insertStmt = db.prepare('INSERT INTO contacts (firstName, lastName, emailAddress, notes, dateTime) VALUES (?, ?, ?, ?, ?)');
+    insertStmt.run(contact.firstName, contact.lastName, contact.emailAddress, contact.notes, contact.dateTime);
+}
 
 
+
+module.exports = { readContactsFromDatabase, addContactToDatabase};
