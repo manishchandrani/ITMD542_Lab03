@@ -1,4 +1,4 @@
-﻿# ITMD542_Lab2
+﻿# ITMD542_Lab2andLab3
 
 
 Manish Chandrani
@@ -36,7 +36,7 @@ This command will install all the required dependencies listed in the package.js
 
 Start the Application in when in the contact-database directory:
 
-npm start
+npm run dev
 
 
 Insights:  I gained a deeper understanding of implementing CRUD operations (Create, Read, Update, Delete) in a Node.js application using Express framework. This involved designing routes, handling HTTP requests, and managing data persistence.
