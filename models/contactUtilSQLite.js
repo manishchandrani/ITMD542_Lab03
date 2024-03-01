@@ -40,6 +40,11 @@ function updateContactInDatabase(contactId, updatedContact) {
     updateStmt.run(updatedContact.firstName, updatedContact.lastName, updatedContact.emailAddress, updatedContact.notes, updatedContact.dateTime, contactId);
 }
 
+function deleteContactFromDatabase(contactId) {
+    const deleteStmt = db.prepare('DELETE FROM contacts WHERE id=?');
+    deleteStmt.run(contactId);
+}
 
 
-module.exports = { readContactsFromDatabase, addContactToDatabase, getContactByIdFromDatabase, updateContactInDatabase};
+
+module.exports = { readContactsFromDatabase, addContactToDatabase, getContactByIdFromDatabase, updateContactInDatabase, deleteContactFromDatabase};
