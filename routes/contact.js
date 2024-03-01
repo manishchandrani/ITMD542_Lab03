@@ -67,4 +67,11 @@ router.post('/:id/edit', validateContact, (req, res) => {
   res.redirect(`/contacts`);
 });
 
+// Route handler for deleting a contact
+router.post('/:id/delete', (req, res) => {
+  const contactId = req.params.id;
+  contactUtils.deleteContactFromDatabase(contactId);
+  res.redirect('/contacts');
+});
+
 module.exports = router;
