@@ -30,6 +30,11 @@ function addContactToDatabase(contact) {
     insertStmt.run(contact.firstName, contact.lastName, contact.emailAddress, contact.notes, contact.dateTime);
 }
 
+function getContactByIdFromDatabase(contactId) {
+    const query = db.prepare('SELECT * FROM contacts WHERE id = ?');
+    return query.get(contactId);
+}
 
 
-module.exports = { readContactsFromDatabase, addContactToDatabase};
+
+module.exports = { readContactsFromDatabase, addContactToDatabase, getContactByIdFromDatabase};
